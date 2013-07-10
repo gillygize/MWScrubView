@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MWScrubView.h"
 
-@interface MWViewController : UIViewController
+@interface MWViewController : UIViewController <MWScrubViewDataSource, UICollectionViewDelegateFlowLayout>
+
+@property (strong, nonatomic) IBOutlet MWScrubView *scrubView;
+
+@property (strong, nonatomic) NSMutableArray *sections;
 
 @end

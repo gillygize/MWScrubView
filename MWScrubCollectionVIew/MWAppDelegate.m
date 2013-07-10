@@ -12,18 +12,15 @@
 
 @implementation MWAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-      self.viewController = [[MWViewController alloc] initWithNibName:@"MWViewController_iPhone" bundle:nil];
-  } else {
-      self.viewController = [[MWViewController alloc] initWithNibName:@"MWViewController_iPad" bundle:nil];
-  }
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.viewController = [[MWViewController alloc] initWithNibName:@"MWViewController_iPad" bundle:nil];
+
   self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
-    return YES;
+
+  [self.window makeKeyAndVisible];
+
+  return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

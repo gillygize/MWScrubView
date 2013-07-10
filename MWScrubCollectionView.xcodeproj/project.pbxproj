@@ -17,19 +17,19 @@
 		F4027C6C178BF1A100E4C20E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4027C6B178BF1A100E4C20E /* Default@2x.png */; };
 		F4027C6E178BF1A100E4C20E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4027C6D178BF1A100E4C20E /* Default-568h@2x.png */; };
 		F4027C71178BF1A100E4C20E /* MWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4027C70178BF1A100E4C20E /* MWViewController.m */; };
-		F4027C74178BF1A100E4C20E /* MWViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4027C72178BF1A100E4C20E /* MWViewController_iPhone.xib */; };
 		F4027C77178BF1A100E4C20E /* MWViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4027C75178BF1A100E4C20E /* MWViewController_iPad.xib */; };
+		F4027C82178C14BD00E4C20E /* MWScrubView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4027C81178C14BD00E4C20E /* MWScrubView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F4027C54178BF1A100E4C20E /* MWScrubCollectionVIew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MWScrubCollectionVIew.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4027C54178BF1A100E4C20E /* MWScrubCollectionView.temp_caseinsensitive_rename.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MWScrubCollectionView.temp_caseinsensitive_rename.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4027C57178BF1A100E4C20E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F4027C59178BF1A100E4C20E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F4027C5B178BF1A100E4C20E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		F4027C5F178BF1A100E4C20E /* MWScrubCollectionVIew-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MWScrubCollectionVIew-Info.plist"; sourceTree = "<group>"; };
+		F4027C5F178BF1A100E4C20E /* MWScrubCollectionView.temp_caseinsensitive_rename-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MWScrubCollectionView.temp_caseinsensitive_rename-Info.plist"; sourceTree = "<group>"; };
 		F4027C61178BF1A100E4C20E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F4027C63178BF1A100E4C20E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		F4027C65178BF1A100E4C20E /* MWScrubCollectionVIew-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MWScrubCollectionVIew-Prefix.pch"; sourceTree = "<group>"; };
+		F4027C65178BF1A100E4C20E /* MWScrubCollectionView.temp_caseinsensitive_rename-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MWScrubCollectionView.temp_caseinsensitive_rename-Prefix.pch"; sourceTree = "<group>"; };
 		F4027C66178BF1A100E4C20E /* MWAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWAppDelegate.h; sourceTree = "<group>"; };
 		F4027C67178BF1A100E4C20E /* MWAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWAppDelegate.m; sourceTree = "<group>"; };
 		F4027C69178BF1A100E4C20E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -37,8 +37,9 @@
 		F4027C6D178BF1A100E4C20E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F4027C6F178BF1A100E4C20E /* MWViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWViewController.h; sourceTree = "<group>"; };
 		F4027C70178BF1A100E4C20E /* MWViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWViewController.m; sourceTree = "<group>"; };
-		F4027C73178BF1A100E4C20E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MWViewController_iPhone.xib; sourceTree = "<group>"; };
 		F4027C76178BF1A100E4C20E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MWViewController_iPad.xib; sourceTree = "<group>"; };
+		F4027C80178C14BD00E4C20E /* MWScrubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWScrubView.h; sourceTree = "<group>"; };
+		F4027C81178C14BD00E4C20E /* MWScrubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWScrubView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +59,7 @@
 		F4027C4B178BF1A100E4C20E = {
 			isa = PBXGroup;
 			children = (
-				F4027C5D178BF1A100E4C20E /* MWScrubCollectionVIew */,
+				F4027C5D178BF1A100E4C20E /* MWScrubCollectionView */,
 				F4027C56178BF1A100E4C20E /* Frameworks */,
 				F4027C55178BF1A100E4C20E /* Products */,
 			);
@@ -67,7 +68,7 @@
 		F4027C55178BF1A100E4C20E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F4027C54178BF1A100E4C20E /* MWScrubCollectionVIew.app */,
+				F4027C54178BF1A100E4C20E /* MWScrubCollectionView.temp_caseinsensitive_rename.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,27 +83,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F4027C5D178BF1A100E4C20E /* MWScrubCollectionVIew */ = {
+		F4027C5D178BF1A100E4C20E /* MWScrubCollectionView */ = {
 			isa = PBXGroup;
 			children = (
 				F4027C66178BF1A100E4C20E /* MWAppDelegate.h */,
 				F4027C67178BF1A100E4C20E /* MWAppDelegate.m */,
 				F4027C6F178BF1A100E4C20E /* MWViewController.h */,
 				F4027C70178BF1A100E4C20E /* MWViewController.m */,
-				F4027C72178BF1A100E4C20E /* MWViewController_iPhone.xib */,
+				F4027C80178C14BD00E4C20E /* MWScrubView.h */,
+				F4027C81178C14BD00E4C20E /* MWScrubView.m */,
 				F4027C75178BF1A100E4C20E /* MWViewController_iPad.xib */,
 				F4027C5E178BF1A100E4C20E /* Supporting Files */,
 			);
+			name = MWScrubCollectionView;
 			path = MWScrubCollectionVIew;
 			sourceTree = "<group>";
 		};
 		F4027C5E178BF1A100E4C20E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F4027C5F178BF1A100E4C20E /* MWScrubCollectionVIew-Info.plist */,
+				F4027C5F178BF1A100E4C20E /* MWScrubCollectionView.temp_caseinsensitive_rename-Info.plist */,
 				F4027C60178BF1A100E4C20E /* InfoPlist.strings */,
 				F4027C63178BF1A100E4C20E /* main.m */,
-				F4027C65178BF1A100E4C20E /* MWScrubCollectionVIew-Prefix.pch */,
+				F4027C65178BF1A100E4C20E /* MWScrubCollectionView.temp_caseinsensitive_rename-Prefix.pch */,
 				F4027C69178BF1A100E4C20E /* Default.png */,
 				F4027C6B178BF1A100E4C20E /* Default@2x.png */,
 				F4027C6D178BF1A100E4C20E /* Default-568h@2x.png */,
@@ -113,9 +116,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F4027C53178BF1A100E4C20E /* MWScrubCollectionVIew */ = {
+		F4027C53178BF1A100E4C20E /* MWScrubCollectionView.temp_caseinsensitive_rename */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F4027C7A178BF1A100E4C20E /* Build configuration list for PBXNativeTarget "MWScrubCollectionVIew" */;
+			buildConfigurationList = F4027C7A178BF1A100E4C20E /* Build configuration list for PBXNativeTarget "MWScrubCollectionView.temp_caseinsensitive_rename" */;
 			buildPhases = (
 				F4027C50178BF1A100E4C20E /* Sources */,
 				F4027C51178BF1A100E4C20E /* Frameworks */,
@@ -125,9 +128,9 @@
 			);
 			dependencies = (
 			);
-			name = MWScrubCollectionVIew;
+			name = MWScrubCollectionView.temp_caseinsensitive_rename;
 			productName = MWScrubCollectionVIew;
-			productReference = F4027C54178BF1A100E4C20E /* MWScrubCollectionVIew.app */;
+			productReference = F4027C54178BF1A100E4C20E /* MWScrubCollectionView.temp_caseinsensitive_rename.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -140,7 +143,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Matthew Gillingham";
 			};
-			buildConfigurationList = F4027C4F178BF1A100E4C20E /* Build configuration list for PBXProject "MWScrubCollectionVIew" */;
+			buildConfigurationList = F4027C4F178BF1A100E4C20E /* Build configuration list for PBXProject "MWScrubCollectionView" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -152,7 +155,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F4027C53178BF1A100E4C20E /* MWScrubCollectionVIew */,
+				F4027C53178BF1A100E4C20E /* MWScrubCollectionView.temp_caseinsensitive_rename */,
 			);
 		};
 /* End PBXProject section */
@@ -166,7 +169,6 @@
 				F4027C6A178BF1A100E4C20E /* Default.png in Resources */,
 				F4027C6C178BF1A100E4C20E /* Default@2x.png in Resources */,
 				F4027C6E178BF1A100E4C20E /* Default-568h@2x.png in Resources */,
-				F4027C74178BF1A100E4C20E /* MWViewController_iPhone.xib in Resources */,
 				F4027C77178BF1A100E4C20E /* MWViewController_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,6 +183,7 @@
 				F4027C64178BF1A100E4C20E /* main.m in Sources */,
 				F4027C68178BF1A100E4C20E /* MWAppDelegate.m in Sources */,
 				F4027C71178BF1A100E4C20E /* MWViewController.m in Sources */,
+				F4027C82178C14BD00E4C20E /* MWScrubView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,14 +196,6 @@
 				F4027C61178BF1A100E4C20E /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		F4027C72178BF1A100E4C20E /* MWViewController_iPhone.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F4027C73178BF1A100E4C20E /* en */,
-			);
-			name = MWViewController_iPhone.xib;
 			sourceTree = "<group>";
 		};
 		F4027C75178BF1A100E4C20E /* MWViewController_iPad.xib */ = {
@@ -276,9 +271,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MWScrubCollectionVIew/MWScrubCollectionVIew-Prefix.pch";
-				INFOPLIST_FILE = "MWScrubCollectionVIew/MWScrubCollectionVIew-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "MWScrubCollectionVIew/MWScrubCollectionView.temp_caseinsensitive_rename-Prefix.pch";
+				INFOPLIST_FILE = "MWScrubCollectionVIew/MWScrubCollectionView.temp_caseinsensitive_rename-Info.plist";
+				PRODUCT_NAME = MWScrubCollectionView.temp_caseinsensitive_rename;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -287,9 +282,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MWScrubCollectionVIew/MWScrubCollectionVIew-Prefix.pch";
-				INFOPLIST_FILE = "MWScrubCollectionVIew/MWScrubCollectionVIew-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "MWScrubCollectionVIew/MWScrubCollectionView.temp_caseinsensitive_rename-Prefix.pch";
+				INFOPLIST_FILE = "MWScrubCollectionVIew/MWScrubCollectionView.temp_caseinsensitive_rename-Info.plist";
+				PRODUCT_NAME = MWScrubCollectionView.temp_caseinsensitive_rename;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -297,7 +292,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F4027C4F178BF1A100E4C20E /* Build configuration list for PBXProject "MWScrubCollectionVIew" */ = {
+		F4027C4F178BF1A100E4C20E /* Build configuration list for PBXProject "MWScrubCollectionView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4027C78178BF1A100E4C20E /* Debug */,
@@ -306,13 +301,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4027C7A178BF1A100E4C20E /* Build configuration list for PBXNativeTarget "MWScrubCollectionVIew" */ = {
+		F4027C7A178BF1A100E4C20E /* Build configuration list for PBXNativeTarget "MWScrubCollectionView.temp_caseinsensitive_rename" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4027C7B178BF1A100E4C20E /* Debug */,
 				F4027C7C178BF1A100E4C20E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
