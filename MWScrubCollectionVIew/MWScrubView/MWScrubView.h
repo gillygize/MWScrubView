@@ -12,6 +12,7 @@
 @class MWScrubView;
 
 @interface MWScrubViewAttribute : NSObject
+
 @property (strong, nonatomic) NSAttributedString *attributedText;
 @property (nonatomic) NSRange range;
 

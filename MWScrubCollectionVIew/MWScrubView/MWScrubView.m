@@ -7,87 +7,7 @@
 //
 
 #import "MWScrubView.h"
-
-@class MWScrubControlView;
-
-@protocol MWScrubControlViewDelegate
-- (void)scrubControlView:(MWScrubControlView*)controlView didScrubToRelativeYCoordinate:(CGFloat)yCoordinate;
-@end
-
-@interface MWScrubControlLabelAttribute : NSObject
-@property (strong, nonatomic) NSAttributedString *attributedString;
-@property (nonatomic) CGFloat relativeYCoordinate;
-@end
-
-@implementation MWScrubControlLabelAttribute
-@end
-
-@interface MWScrubControlView : UIView
-
-@property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
-@property (weak, nonatomic) id<MWScrubControlViewDelegate> delegate;
-@property (strong, nonatomic) NSMutableArray *labelAttributes;
-
-- (void)addAttributedText:(NSAttributedString*)attributedString atRelativeYCoordinate:(CGFloat)yCoordinate;
-
-@end
-
-@implementation MWScrubControlView
-
-- (id)initWithFrame:(CGRect)frame delegate:(id<MWScrubControlViewDelegate>)delegate {
-  if (self = [super initWithFrame:frame]) {
-    self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
-    self.panGesture.maximumNumberOfTouches = 1;
-    self.delegate = delegate;
-    self.labelAttributes = [[NSMutableArray alloc] init];
-    [self addGestureRecognizer:self.panGesture];
-  }
-  return self;
-}
-
-- (void)panGestureRecognized:(UIPanGestureRecognizer*)panGesture {
-  CGPoint touchPosition = [panGesture locationInView:self];
-
-  switch (panGesture.state) {
-    case UIGestureRecognizerStateBegan:
-    case UIGestureRecognizerStateChanged:
-    case UIGestureRecognizerStateEnded:
-      [self.delegate scrubControlView:self didScrubToRelativeYCoordinate:[self relativeYCoordinateForPoint:touchPosition]];
-      break;
-    default:
-      break;
-  }
-}
-
-- (CGFloat)relativeYCoordinateForPoint:(CGPoint)point {
-  return MAX(point.y / self.bounds.size.height, 0.0f);
-}
-
-- (void)addAttributedText:(NSAttributedString*)attributedString atRelativeYCoordinate:(CGFloat)yCoordinate {
-  MWScrubControlLabelAttribute *attribute = [[MWScrubControlLabelAttribute alloc] init];
-  attribute.attributedString = attributedString;
-  attribute.relativeYCoordinate = yCoordinate;
-  [self.labelAttributes addObject:attribute];
-
-  [self setNeedsLayout];
-}
-
-- (void)layoutSubviews {
-  [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-
-  [self.labelAttributes enumerateObjectsUsingBlock:^(MWScrubControlLabelAttribute *attribute, NSUInteger idx, BOOL *stop) {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f,
-      self.bounds.size.height * attribute.relativeYCoordinate,
-      self.bounds.size.width,
-      [attribute.attributedString size].height
-    )];
-    label.attributedText = attribute.attributedString;
-    label.backgroundColor = [UIColor clearColor];
-    [self addSubview:label];
-  }];
-}
-
-@end
+#import "MWScrubControlView.h"
 
 @implementation MWScrubViewAttribute
 + (instancetype)attributeWithAttributedText:(NSAttributedString*)attributedString
@@ -181,7 +101,6 @@
       if (nil != attribute.attributedText) {
         NSUInteger positionOfItem = [self positionOfItemAtIndexPath:indexPath];
         CGFloat relativeYCoordinate = (CGFloat)positionOfItem / self.totalWeight;
-        NSLog(@"%d, %d, %f", positionOfItem, self.totalWeight, relativeYCoordinate);
         [self.scrubControlView addAttributedText:attribute.attributedText atRelativeYCoordinate:relativeYCoordinate];
       }
     }
@@ -223,9 +142,12 @@
 - (NSUInteger)sumOfWeightsForIndexSet:(NSIndexSet*)set inSection:(NSArray*)section {
   __block NSUInteger sumOfWeights = 0;
 
-  [section enumerateObjectsAtIndexes:set options:0 usingBlock:^(MWScrubViewAttribute *attribute, NSUInteger idx, BOOL *stop) {
-    sumOfWeights += attribute.range.length;
-  }];
+  [section
+    enumerateObjectsAtIndexes:set
+    options:0
+    usingBlock:^(MWScrubViewAttribute *attribute, NSUInteger idx, BOOL *stop) {
+      sumOfWeights += attribute.range.length;
+    }];
 
   return sumOfWeights;
 }
@@ -234,24 +156,30 @@
 - (void)scrubControlView:(MWScrubControlView *)controlView didScrubToRelativeYCoordinate:(CGFloat)yCoordinate {
   NSUInteger position = floorf(yCoordinate * self.totalWeight);
 
-  NSUInteger indexOfMatchingSection = [self.attributeSections indexOfObjectPassingTest:^BOOL(NSArray *array, NSUInteger idx, BOOL *stop) {
-    if (array.count == 0) return NO;
+  NSUInteger indexOfMatchingSection = [self.attributeSections
+    indexOfObjectPassingTest:^BOOL(NSArray *array, NSUInteger idx, BOOL *stop) {
+      if (array.count == 0) return NO;
 
-    MWScrubViewAttribute *firstAttribute = array[0];
-    MWScrubViewAttribute *lastAttribute = [array lastObject];
+      MWScrubViewAttribute *firstAttribute = array[0];
+      MWScrubViewAttribute *lastAttribute = [array lastObject];
 
-    if (position >= firstAttribute.range.location && position < (lastAttribute.range.location + lastAttribute.range.length)) {
-      return YES;
-    }
+      if (position >= firstAttribute.range.location &&
+       position < (lastAttribute.range.location + lastAttribute.range.length)) {
+        return YES;
+      }
 
-    return NO;
-  }];
+      return NO;
+    }];
 
-  NSUInteger indexOfMatchingItem = [self.attributeSections[indexOfMatchingSection] indexOfObjectPassingTest:^BOOL(MWScrubViewAttribute *attribute, NSUInteger idx, BOOL *stop) {
-    return NSLocationInRange(position, attribute.range);
-  }];
+  NSUInteger indexOfMatchingItem = [self.attributeSections[indexOfMatchingSection]
+    indexOfObjectPassingTest:^BOOL(MWScrubViewAttribute *attribute, NSUInteger idx, BOOL *stop) {
+      return NSLocationInRange(position, attribute.range);
+    }];
 
   NSIndexPath *indexPath = [NSIndexPath indexPathForItem:indexOfMatchingItem inSection:indexOfMatchingSection];
-  [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+  [self.collectionView
+    scrollToItemAtIndexPath:indexPath
+    atScrollPosition:UICollectionViewScrollPositionTop
+    animated:NO];
 }
 @end

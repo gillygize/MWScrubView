@@ -12,7 +12,6 @@
 @interface MWViewController : UIViewController <MWScrubViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) IBOutlet MWScrubView *scrubView;
-
 @property (strong, nonatomic) NSMutableArray *sections;
 
 @end
