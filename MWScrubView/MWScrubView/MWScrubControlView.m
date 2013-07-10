@@ -38,11 +38,15 @@
 
   switch (panGesture.state) {
     case UIGestureRecognizerStateBegan:
+      [self.delegate scrubControlViewDidBeginScrubbing:self];
+      break;
     case UIGestureRecognizerStateChanged:
-    case UIGestureRecognizerStateEnded:
       [self.delegate
         scrubControlView:self
         didScrubToRelativeYCoordinate:[self relativeYCoordinateForPoint:touchPosition]];
+      break;
+    case UIGestureRecognizerStateEnded:
+      [self.delegate scrubControlViewDidEndScrubbing:self];
       break;
     default:
       break;

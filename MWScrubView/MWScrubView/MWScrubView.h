@@ -13,10 +13,12 @@
 
 @interface MWScrubViewAttribute : NSObject
 
-@property (strong, nonatomic) NSAttributedString *attributedText;
+@property (strong, nonatomic) NSAttributedString *positionAttributedText;
+@property (strong, nonatomic) NSAttributedString *indicatorAttributedText;
 @property (nonatomic) NSRange range;
 
-+ (instancetype)attributeWithAttributedText:(NSAttributedString*)attributedString
++ (instancetype)attributeWithPositionMarker:(NSAttributedString*)positionAttributedText
+ indicator:(NSAttributedString*)indicatorAttributedText
  weight:(NSUInteger)weight;
 @end
 

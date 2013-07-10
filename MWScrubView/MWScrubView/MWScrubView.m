@@ -10,10 +10,12 @@
 #import "MWScrubControlView.h"
 
 @implementation MWScrubViewAttribute
-+ (instancetype)attributeWithAttributedText:(NSAttributedString*)attributedString
++ (instancetype)attributeWithPositionMarker:(NSAttributedString*)positionAttributedText
+ indicator:(NSAttributedString*)indicatorAttributedText
  weight:(NSUInteger)weight {
   MWScrubViewAttribute *attribute = [[MWScrubViewAttribute alloc] init];
-  attribute.attributedText = attributedString;
+  attribute.positionAttributedText = positionAttributedText;
+  attribute.indicatorAttributedText = indicatorAttributedText;
   attribute.range = NSMakeRange(0, weight);
   return attribute;
 }
@@ -22,6 +24,7 @@
 @interface MWScrubView () <MWScrubControlViewDelegate>
 
 @property (strong, nonatomic) MWScrubControlView *scrubControlView;
+@property (strong, nonatomic) UILabel *indicatorLabel;
 @property (strong, nonatomic) NSMutableArray *attributeSections;
 @property (nonatomic) NSUInteger totalWeight;
 
@@ -69,6 +72,11 @@
   self.autoresizesSubviews = YES;
   [self addSubview:self.scrubControlView];
 
+  self.indicatorLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  self.indicatorLabel.backgroundColor = [UIColor orangeColor];
+  self.indicatorLabel.hidden = YES;
+  [self addSubview:self.indicatorLabel];
+
   NSInteger numberOfSections = 1;
 
   if ([self.dataSource respondsToSelector:@selector(numberOfSectionsInCollectionView:)]) {
@@ -98,10 +106,10 @@
       NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
       MWScrubViewAttribute *attribute = attributeSection[j];
 
-      if (nil != attribute.attributedText) {
+      if (nil != attribute.positionAttributedText) {
         NSUInteger positionOfItem = [self positionOfItemAtIndexPath:indexPath];
         CGFloat relativeYCoordinate = (CGFloat)positionOfItem / self.totalWeight;
-        [self.scrubControlView addAttributedText:attribute.attributedText atRelativeYCoordinate:relativeYCoordinate];
+        [self.scrubControlView addAttributedText:attribute.positionAttributedText atRelativeYCoordinate:relativeYCoordinate];
       }
     }
   }
@@ -152,10 +160,7 @@
   return sumOfWeights;
 }
 
-#pragma mark - MWScrubControlViewDelegate
-- (void)scrubControlView:(MWScrubControlView *)controlView didScrubToRelativeYCoordinate:(CGFloat)yCoordinate {
-  NSUInteger position = floorf(yCoordinate * self.totalWeight);
-
+- (NSIndexPath*)indexForPosition:(NSUInteger)position {
   NSUInteger indexOfMatchingSection = [self.attributeSections
     indexOfObjectPassingTest:^BOOL(NSArray *array, NSUInteger idx, BOOL *stop) {
       if (array.count == 0) return NO;
@@ -176,10 +181,30 @@
       return NSLocationInRange(position, attribute.range);
     }];
 
-  NSIndexPath *indexPath = [NSIndexPath indexPathForItem:indexOfMatchingItem inSection:indexOfMatchingSection];
+  return [NSIndexPath indexPathForItem:indexOfMatchingItem inSection:indexOfMatchingSection];
+}
+
+#pragma mark - MWScrubControlViewDelegate
+- (void)scrubControlViewDidBeginScrubbing:(MWScrubControlView *)controlView {
+  self.indicatorLabel.hidden = NO;
+}
+
+- (void)scrubControlViewDidEndScrubbing:(MWScrubControlView *)controlView {
+  self.indicatorLabel.hidden = YES;
+}
+
+- (void)scrubControlView:(MWScrubControlView *)controlView didScrubToRelativeYCoordinate:(CGFloat)yCoordinate {
+  NSUInteger position = floorf(yCoordinate * self.totalWeight);
+  NSIndexPath *indexPath = [self indexForPosition:position];
+
   [self.collectionView
     scrollToItemAtIndexPath:indexPath
     atScrollPosition:UICollectionViewScrollPositionTop
     animated:NO];
+
+  MWScrubViewAttribute *attribute = self.attributeSections[indexPath.section][indexPath.item];
+  self.indicatorLabel.attributedText = attribute.indicatorAttributedText;
+  self.indicatorLabel.center = CGPointMake(46.0f, yCoordinate * self.scrubControlView.bounds.size.height);
+  [self.indicatorLabel sizeToFit];
 }
 @end

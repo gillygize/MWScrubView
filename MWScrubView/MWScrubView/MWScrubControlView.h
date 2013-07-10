@@ -11,6 +11,8 @@
 @class MWScrubControlView;
 
 @protocol MWScrubControlViewDelegate
+- (void)scrubControlViewDidBeginScrubbing:(MWScrubControlView*)controlView;
+- (void)scrubControlViewDidEndScrubbing:(MWScrubControlView*)controlView;
 - (void)scrubControlView:(MWScrubControlView*)controlView didScrubToRelativeYCoordinate:(CGFloat)yCoordinate;
 @end
 
