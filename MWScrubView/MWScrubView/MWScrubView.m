@@ -37,6 +37,17 @@
   self = [super initWithFrame:frame];
 
   if (self) {
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.sectionInset = UIEdgeInsetsMake(0.0f, 44.0f, 0.0f, 0.0f );
+    layout.itemSize = CGSizeMake(self.bounds.size.width-(layout.sectionInset.left + 1), 44.0f);
+    layout.minimumInteritemSpacing = 0.0f;
+    layout.minimumLineSpacing = 0.0f;
+    
+    self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+    self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.collectionView.dataSource = self.dataSource;
+    self.collectionView.delegate = self.delegate;
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     [self setup];
   }
   return self;
@@ -50,18 +61,7 @@
 - (void)setup {
   self.attributeSections = [[NSMutableArray alloc] init];
   self.totalWeight = 0;
-
-  UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-  layout.sectionInset = UIEdgeInsetsMake(0.0f, 44.0f, 0.0f, 0.0f );
-  layout.itemSize = CGSizeMake(self.bounds.size.width-(layout.sectionInset.left + 1), 44.0f);
-  layout.minimumInteritemSpacing = 0.0f;
-  layout.minimumLineSpacing = 0.0f;
-
-  self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
-  self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-  self.collectionView.dataSource = self.dataSource;
-  self.collectionView.delegate = self.delegate;
-  self.collectionView.backgroundColor = [UIColor whiteColor];
+  
   [self addSubview:self.collectionView];
 
   self.scrubControlView = [[MWScrubControlView alloc] initWithFrame:CGRectMake(
