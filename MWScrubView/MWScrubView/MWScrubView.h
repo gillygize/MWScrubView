@@ -27,7 +27,7 @@
 @end
 
 @interface MWScrubView : UIView
-@property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet id<MWScrubViewDataSource> dataSource;
 @property (weak, nonatomic) IBOutlet id<UICollectionViewDelegateFlowLayout> delegate;
 @end

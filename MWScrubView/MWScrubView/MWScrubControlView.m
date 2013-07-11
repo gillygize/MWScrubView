@@ -67,6 +67,8 @@
 }
 
 - (void)layoutSubviews {
+  [super layoutSubviews];
+
   [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
   [self.labelAttributes

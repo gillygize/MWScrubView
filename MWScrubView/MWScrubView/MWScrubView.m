@@ -121,6 +121,8 @@
 }
 
 - (void)layoutSubviews {
+  [super layoutSubviews];
+
   UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
   layout.itemSize = CGSizeMake(self.collectionView.bounds.size.width-layout.sectionInset.left, 44.0f);
   [self.collectionView.collectionViewLayout invalidateLayout];
