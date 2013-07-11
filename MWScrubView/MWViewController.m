@@ -68,7 +68,6 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   TestCell *cell = (TestCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"test" forIndexPath:indexPath];
-  cell.backgroundColor = indexPath.item % 2 == 0 ? [UIColor redColor] : [UIColor blueColor];
   cell.label.text = [self.sections[indexPath.section][indexPath.item] stringValue];
 
   return cell;

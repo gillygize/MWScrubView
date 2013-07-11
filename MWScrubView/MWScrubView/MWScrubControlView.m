@@ -54,7 +54,7 @@
 }
 
 - (CGFloat)relativeYCoordinateForPoint:(CGPoint)point {
-  return MAX(point.y / self.bounds.size.height, 0.0f);
+  return MIN(1.0, MAX(point.y / self.bounds.size.height, 0.0f));
 }
 
 - (void)addAttributedText:(NSAttributedString*)attributedString atRelativeYCoordinate:(CGFloat)yCoordinate {
@@ -78,6 +78,8 @@
       )];
       label.attributedText = attribute.attributedString;
       label.backgroundColor = [UIColor clearColor];
+      label.textColor = [UIColor darkGrayColor];
+      label.font = [UIFont fontWithName:@"Helvetica-Bold" size:10.0f];
       [self addSubview:label];
     }];
 }

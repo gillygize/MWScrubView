@@ -8,6 +8,7 @@
 
 #import "MWScrubView.h"
 #import "MWScrubControlView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation MWScrubViewAttribute
 + (instancetype)attributeWithPositionMarker:(NSAttributedString*)positionAttributedText
@@ -60,20 +61,24 @@
   self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   self.collectionView.dataSource = self.dataSource;
   self.collectionView.delegate = self.delegate;
+  self.collectionView.backgroundColor = [UIColor whiteColor];
   [self addSubview:self.collectionView];
 
   self.scrubControlView = [[MWScrubControlView alloc] initWithFrame:CGRectMake(
     0.0f,
-    0.0f,
+    5.0f,
     44.0f,
-    self.bounds.size.height
+    self.bounds.size.height - 10.0f
   ) delegate: self];
-  self.scrubControlView.backgroundColor = [UIColor yellowColor];
+  self.scrubControlView.layer.cornerRadius = 8.0f;
+  self.scrubControlView.layer.shadowRadius = 4.0f;
+  self.scrubControlView.layer.shadowOpacity = 1.0f;
+  self.scrubControlView.layer.masksToBounds = NO;
+  self.scrubControlView.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
   self.autoresizesSubviews = YES;
   [self addSubview:self.scrubControlView];
 
   self.indicatorLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.indicatorLabel.backgroundColor = [UIColor orangeColor];
   self.indicatorLabel.hidden = YES;
   [self addSubview:self.indicatorLabel];
 
@@ -122,16 +127,16 @@
 
   self.scrubControlView.frame = CGRectMake(
     0.0f,
-    0.0f,
+    5.0f,
     44.0f,
-    self.bounds.size.height
+    self.bounds.size.height - 10.0f
   );
 }
 
 - (NSUInteger)positionOfItemAtIndexPath:(NSIndexPath*)indexPath {
   __block NSUInteger position = 0;
 
-  if (indexPath.section > 0) {
+  if (indexPath.section > 0) {  
     [self.attributeSections
       enumerateObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, indexPath.section-1)]
       options:0
@@ -160,7 +165,7 @@
   return sumOfWeights;
 }
 
-- (NSIndexPath*)indexForPosition:(NSUInteger)position {
+- (NSIndexPath*)indexPathForPosition:(NSUInteger)position {
   NSUInteger indexOfMatchingSection = [self.attributeSections
     indexOfObjectPassingTest:^BOOL(NSArray *array, NSUInteger idx, BOOL *stop) {
       if (array.count == 0) return NO;
@@ -176,11 +181,19 @@
       return NO;
     }];
 
+  if (NSNotFound == indexOfMatchingSection) {
+    return nil;
+  }
+
   NSUInteger indexOfMatchingItem = [self.attributeSections[indexOfMatchingSection]
     indexOfObjectPassingTest:^BOOL(MWScrubViewAttribute *attribute, NSUInteger idx, BOOL *stop) {
       return NSLocationInRange(position, attribute.range);
     }];
 
+  if (NSNotFound == indexOfMatchingItem) {
+    return nil;
+  }
+  
   return [NSIndexPath indexPathForItem:indexOfMatchingItem inSection:indexOfMatchingSection];
 }
 
@@ -195,16 +208,18 @@
 
 - (void)scrubControlView:(MWScrubControlView *)controlView didScrubToRelativeYCoordinate:(CGFloat)yCoordinate {
   NSUInteger position = floorf(yCoordinate * self.totalWeight);
-  NSIndexPath *indexPath = [self indexForPosition:position];
+  NSIndexPath *indexPath = [self indexPathForPosition:position];
+  
+  if (indexPath) {
+    [self.collectionView
+      scrollToItemAtIndexPath:indexPath
+      atScrollPosition:UICollectionViewScrollPositionTop
+      animated:NO];
 
-  [self.collectionView
-    scrollToItemAtIndexPath:indexPath
-    atScrollPosition:UICollectionViewScrollPositionTop
-    animated:NO];
-
-  MWScrubViewAttribute *attribute = self.attributeSections[indexPath.section][indexPath.item];
-  self.indicatorLabel.attributedText = attribute.indicatorAttributedText;
-  self.indicatorLabel.center = CGPointMake(46.0f, yCoordinate * self.scrubControlView.bounds.size.height);
-  [self.indicatorLabel sizeToFit];
+    MWScrubViewAttribute *attribute = self.attributeSections[indexPath.section][indexPath.item];
+    self.indicatorLabel.attributedText = attribute.indicatorAttributedText;
+    self.indicatorLabel.center = CGPointMake(46.0f, yCoordinate * self.scrubControlView.bounds.size.height);
+    [self.indicatorLabel sizeToFit];
+  }
 }
 @end
