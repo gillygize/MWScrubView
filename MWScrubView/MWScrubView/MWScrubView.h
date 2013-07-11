@@ -30,4 +30,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet id<MWScrubViewDataSource> dataSource;
 @property (weak, nonatomic) IBOutlet id<UICollectionViewDelegateFlowLayout> delegate;
+
+- (void)reloadData;
+
 @end

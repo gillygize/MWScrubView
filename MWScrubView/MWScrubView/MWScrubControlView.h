@@ -23,5 +23,6 @@
 
 - (id)initWithFrame:(CGRect)frame delegate:(id<MWScrubControlViewDelegate>)delegate;
 - (void)addAttributedText:(NSAttributedString*)attributedString atRelativeYCoordinate:(CGFloat)yCoordinate;
+- (void)clearAttributedText;
 
 @end

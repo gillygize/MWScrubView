@@ -37,32 +37,35 @@
   self = [super initWithFrame:frame];
 
   if (self) {
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.sectionInset = UIEdgeInsetsMake(0.0f, 44.0f, 0.0f, 0.0f );
-    layout.itemSize = CGSizeMake(self.bounds.size.width-(layout.sectionInset.left + 1), 44.0f);
-    layout.minimumInteritemSpacing = 0.0f;
-    layout.minimumLineSpacing = 0.0f;
-    
-    self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
-    self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.collectionView.dataSource = self.dataSource;
-    self.collectionView.delegate = self.delegate;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
     [self setup];
   }
   return self;
 }
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
   [self setup];
 }
 
 
 - (void)setup {
   self.attributeSections = [[NSMutableArray alloc] init];
-  self.totalWeight = 0;
+
+  if (!self.collectionView) {
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.sectionInset = UIEdgeInsetsMake(0.0f, 44.0f, 0.0f, 0.0f );
+    layout.itemSize = CGSizeMake(self.bounds.size.width-(layout.sectionInset.left + 1), 44.0f);
+    layout.minimumInteritemSpacing = 0.0f;
+    layout.minimumLineSpacing = 0.0f;
+
+    self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+    self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:self.collectionView];
+  }
   
-  [self addSubview:self.collectionView];
+  self.collectionView.dataSource = self.dataSource;
+  self.collectionView.delegate = self.delegate;
 
   self.scrubControlView = [[MWScrubControlView alloc] initWithFrame:CGRectMake(
     0.0f,
@@ -81,8 +84,17 @@
   self.indicatorLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   self.indicatorLabel.hidden = YES;
   [self addSubview:self.indicatorLabel];
+  
+  [self reloadData];
+}
+
+- (void)reloadData {
+  [self.collectionView reloadData];
 
   NSInteger numberOfSections = 1;
+  [self.attributeSections removeAllObjects];
+  [self.scrubControlView clearAttributedText];
+  self.totalWeight = 0;
 
   if ([self.dataSource respondsToSelector:@selector(numberOfSectionsInCollectionView:)]) {
     numberOfSections = [self.dataSource numberOfSectionsInCollectionView:self.collectionView];
@@ -114,6 +126,7 @@
       if (nil != attribute.positionAttributedText) {
         NSUInteger positionOfItem = [self positionOfItemAtIndexPath:indexPath];
         CGFloat relativeYCoordinate = (CGFloat)positionOfItem / self.totalWeight;
+        NSLog(@"%f", relativeYCoordinate);
         [self.scrubControlView addAttributedText:attribute.positionAttributedText atRelativeYCoordinate:relativeYCoordinate];
       }
     }

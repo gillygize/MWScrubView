@@ -66,6 +66,11 @@
   [self setNeedsLayout];
 }
 
+- (void)clearAttributedText {
+  [self.labelAttributes removeAllObjects];
+  [self setNeedsLayout];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 

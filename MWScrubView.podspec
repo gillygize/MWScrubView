@@ -5,7 +5,6 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/gillygize/MWScrubView"
   s.license      = { :type => 'BSD', :file => 'LICENSE' }
   s.authors       = { "Matthew Gillingham" => "gillygize@gmail.com", "Brett Gneiting" => "brett@tokyobits.jp" }
-  s.source       = { :git => "https://github.com/gillygize/MWScrubView.git", :tag => "0.0.1" }
   s.platform     = :ios, '6.0'
   s.source_files = 'MWScrubView/MWScrubView/**/*.{h,m}'
   s.requires_arc = true
