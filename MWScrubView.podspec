@@ -9,4 +9,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '6.0'
   s.source_files = 'MWScrubView/MWScrubView/**/*.{h,m}'
   s.requires_arc = true
+  s.frameworks   = 'UIKit', 'QuartzCore'
 end
