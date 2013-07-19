@@ -87,6 +87,7 @@
       label.backgroundColor = [UIColor clearColor];
       label.textColor = [UIColor darkGrayColor];
       label.font = [UIFont fontWithName:@"Helvetica-Bold" size:10.0f];
+      label.textAlignment = NSTextAlignmentCenter;
       [self addSubview:label];
     }];
 }
