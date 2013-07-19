@@ -82,7 +82,13 @@
   [self addSubview:self.scrubControlView];
 
   self.indicatorLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  self.indicatorLabel.backgroundColor = [UIColor whiteColor];
+  self.indicatorLabel.layer.shadowRadius = 4.0f;
+  self.indicatorLabel.layer.shadowOpacity = 0.6f;
+  self.indicatorLabel.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+  self.indicatorLabel.layer.masksToBounds = NO;
   self.indicatorLabel.hidden = YES;
+
   [self addSubview:self.indicatorLabel];
   
   [self reloadData];
@@ -232,8 +238,12 @@
 
     MWScrubViewAttribute *attribute = self.attributeSections[indexPath.section][indexPath.item];
     self.indicatorLabel.attributedText = attribute.indicatorAttributedText;
-    self.indicatorLabel.center = CGPointMake(46.0f, yCoordinate * self.scrubControlView.bounds.size.height);
-    [self.indicatorLabel sizeToFit];
+    self.indicatorLabel.frame = CGRectMake(
+      50.0f,
+      yCoordinate * self.scrubControlView.bounds.size.height - 10.0f,
+      100.0f,
+      20.0f
+    );
   }
 }
 @end
