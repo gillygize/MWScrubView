@@ -126,7 +126,6 @@
       if (nil != attribute.positionAttributedText) {
         NSUInteger positionOfItem = [self positionOfItemAtIndexPath:indexPath];
         CGFloat relativeYCoordinate = (CGFloat)positionOfItem / self.totalWeight;
-        NSLog(@"%f", relativeYCoordinate);
         [self.scrubControlView addAttributedText:attribute.positionAttributedText atRelativeYCoordinate:relativeYCoordinate];
       }
     }
@@ -137,7 +136,7 @@
   [super layoutSubviews];
 
   UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
-  layout.itemSize = CGSizeMake(self.collectionView.bounds.size.width-layout.sectionInset.left, 44.0f);
+  layout.itemSize = CGSizeMake(self.collectionView.bounds.size.width-layout.sectionInset.left, layout.itemSize.height);
   [self.collectionView.collectionViewLayout invalidateLayout];
 
   self.scrubControlView.frame = CGRectMake(
