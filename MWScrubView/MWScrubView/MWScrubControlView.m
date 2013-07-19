@@ -11,6 +11,7 @@
 @interface MWScrubControlLabelAttribute : NSObject
 @property (strong, nonatomic) NSAttributedString *attributedString;
 @property (nonatomic) CGFloat relativeYCoordinate;
+@property (nonatomic, weak) UILabel *label;
 @end
 
 @implementation MWScrubControlLabelAttribute
@@ -26,9 +27,14 @@
   if (self = [super initWithFrame:frame]) {
     self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
     self.panGesture.maximumNumberOfTouches = 1;
+    [self addGestureRecognizer:self.panGesture];
+
     self.delegate = delegate;
     self.labelAttributes = [[NSMutableArray alloc] init];
-    [self addGestureRecognizer:self.panGesture];
+
+    self.positionIndicatorView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.positionIndicatorView.backgroundColor = [UIColor lightGrayColor];
+    [self addSubview:self.positionIndicatorView];
   }
   return self;
 }
@@ -67,29 +73,49 @@
 }
 
 - (void)clearAttributedText {
+  [self.labelAttributes enumerateObjectsUsingBlock:^(MWScrubControlLabelAttribute *attribute, NSUInteger idx, BOOL *stop) {
+    [attribute.label removeFromSuperview];
+  }];
+
   [self.labelAttributes removeAllObjects];
-  [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-
   [self.labelAttributes
     enumerateObjectsUsingBlock:^(MWScrubControlLabelAttribute *attribute, NSUInteger idx, BOOL *stop) {
-      UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f,
-        self.bounds.size.height * attribute.relativeYCoordinate,
-        self.bounds.size.width,
-        [attribute.attributedString size].height
-      )];
-      label.attributedText = attribute.attributedString;
-      label.backgroundColor = [UIColor clearColor];
-      label.textColor = [UIColor darkGrayColor];
-      label.font = [UIFont fontWithName:@"Helvetica-Bold" size:10.0f];
-      label.textAlignment = NSTextAlignmentCenter;
-      [self addSubview:label];
-    }];
+      UILabel *label = attribute.label;
+
+      if (nil == label) {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f,
+          self.bounds.size.height * attribute.relativeYCoordinate,
+          self.bounds.size.width,
+          [attribute.attributedString size].height
+        )];
+        label.attributedText = attribute.attributedString;
+        label.backgroundColor = [UIColor clearColor];
+        label.textColor = [UIColor darkGrayColor];
+        label.font = [UIFont fontWithName:@"Helvetica-Bold" size:10.0f];
+        label.textAlignment = NSTextAlignmentCenter;
+        attribute.label = label;
+        [self addSubview:label];
+      } else {
+        label.frame = CGRectMake(0.0f,
+          self.bounds.size.height * attribute.relativeYCoordinate,
+          self.bounds.size.width,
+          [attribute.attributedString size].height
+        );
+      }
+  }];
+
+  CGRect relativePositionOfIndicatorView = [self.delegate relativePositionOfIndicatorForScrubControlView:self];
+  self.positionIndicatorView.frame = CGRectMake(
+    relativePositionOfIndicatorView.origin.x * self.bounds.size.width,
+    relativePositionOfIndicatorView.origin.y * self.bounds.size.height,
+    relativePositionOfIndicatorView.size.width * self.bounds.size.width,
+    relativePositionOfIndicatorView.size.height * self.bounds.size.height
+  );
 }
 
 @end

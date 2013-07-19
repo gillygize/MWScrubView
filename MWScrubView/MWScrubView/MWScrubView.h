@@ -26,7 +26,8 @@
 - (MWScrubViewAttribute*)scrubView:(MWScrubView *)scrubView attributeForItemAtIndexPath:(NSIndexPath *)indexPath;
 @end
 
-@interface MWScrubView : UIView
+@interface MWScrubView : UIView <UICollectionViewDelegateFlowLayout>
+
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet id<MWScrubViewDataSource> dataSource;
 @property (weak, nonatomic) IBOutlet id<UICollectionViewDelegateFlowLayout> delegate;

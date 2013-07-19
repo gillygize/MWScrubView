@@ -14,11 +14,13 @@
 - (void)scrubControlViewDidBeginScrubbing:(MWScrubControlView*)controlView;
 - (void)scrubControlViewDidEndScrubbing:(MWScrubControlView*)controlView;
 - (void)scrubControlView:(MWScrubControlView*)controlView didScrubToRelativeYCoordinate:(CGFloat)yCoordinate;
+- (CGRect)relativePositionOfIndicatorForScrubControlView:(MWScrubControlView*)controlView;
 @end
 
 @interface MWScrubControlView : UIView
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
+@property (strong, nonatomic) UIView *positionIndicatorView;
 @property (weak, nonatomic) id<MWScrubControlViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame delegate:(id<MWScrubControlViewDelegate>)delegate;

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MWScrubView"
-  s.version      = "0.0.1"
+  s.version      = "0.0.6"
   s.summary      = "A UIView subclass allowing a developer to easily configure scrubbing through long lists of items."
   s.homepage     = "https://github.com/gillygize/MWScrubView"
   s.license      = { :type => 'BSD', :file => 'LICENSE' }

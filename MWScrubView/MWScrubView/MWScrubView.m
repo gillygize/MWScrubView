@@ -61,11 +61,13 @@
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.allowsSelection = YES;
+
     [self addSubview:self.collectionView];
   }
   
   self.collectionView.dataSource = self.dataSource;
-  self.collectionView.delegate = self.delegate;
+  self.collectionView.delegate = self;
 
   self.scrubControlView = [[MWScrubControlView alloc] initWithFrame:CGRectMake(
     0.0f,
@@ -136,6 +138,8 @@
       }
     }
   }
+
+  [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {
@@ -151,6 +155,7 @@
     44.0f,
     self.bounds.size.height - 10.0f
   );
+  [self.scrubControlView setNeedsLayout];
 }
 
 - (NSUInteger)positionOfItemAtIndexPath:(NSIndexPath*)indexPath {
@@ -233,7 +238,7 @@
   if (indexPath) {
     [self.collectionView
       scrollToItemAtIndexPath:indexPath
-      atScrollPosition:UICollectionViewScrollPositionTop
+      atScrollPosition:UICollectionViewScrollPositionCenteredVertically
       animated:NO];
 
     MWScrubViewAttribute *attribute = self.attributeSections[indexPath.section][indexPath.item];
@@ -246,4 +251,202 @@
     );
   }
 }
+
+- (CGRect)relativePositionOfIndicatorForScrubControlView:(MWScrubControlView *)controlView {
+  if (self.collectionView.contentSize.height < 0.000000001) {
+    return CGRectMake(0.0f, 0.0f, 1.0f, 0.0f);
+  }
+
+  return CGRectMake(
+    0.0f,
+    self.collectionView.contentOffset.y / self.collectionView.contentSize.height,
+    1.0f,
+    self.collectionView.bounds.size.height / self.collectionView.contentSize.height
+  );
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewDidEndDecelerating:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewDidEndScrollingAnimation:scrollView];
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewDidEndZooming:scrollView withView:view atScale:scale];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  [self.scrubControlView setNeedsLayout];
+
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewDidScrollToTop:scrollView];
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewDidZoom:scrollView];
+}
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+  if (![self.delegate respondsToSelector:_cmd]) return YES;
+
+  return [self.delegate scrollViewShouldScrollToTop:scrollView];
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewWillBeginDecelerating:scrollView];
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewWillBeginZooming:scrollView withView:view];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate scrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+  if (![self.delegate respondsToSelector:_cmd]) return nil;
+
+  return [self.delegate viewForZoomingInScrollView:scrollView];
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+  if (![self.delegate respondsToSelector:_cmd]) return NO;
+
+  return [self.delegate collectionView:collectionView canPerformAction:action forItemAtIndexPath:indexPath withSender:sender];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate collectionView:collectionView didDeselectItemAtIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate collectionView:collectionView didEndDisplayingCell:cell forItemAtIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate collectionView:collectionView didEndDisplayingSupplementaryView:view forElementOfKind:elementKind atIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate collectionView:collectionView didHighlightItemAtIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate collectionView:collectionView didUnhighlightItemAtIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+  if (![self.delegate respondsToSelector:_cmd]) return;
+
+  [self.delegate collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return YES;
+
+  return [self.delegate collectionView:collectionView shouldDeselectItemAtIndexPath:indexPath];
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return YES;
+
+  return [self.delegate collectionView:collectionView shouldHighlightItemAtIndexPath:indexPath];
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return YES;
+
+  return [self.delegate collectionView:collectionView shouldSelectItemAtIndexPath:indexPath];
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return NO;
+
+  return [self.delegate collectionView:collectionView shouldShowMenuForItemAtIndexPath:indexPath];
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+  if (![self.delegate respondsToSelector:_cmd]) return collectionViewLayout.sectionInset;
+
+  return [self.delegate collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:section];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+  if (![self.delegate respondsToSelector:_cmd]) return collectionViewLayout.minimumInteritemSpacing;
+
+  return [self.delegate collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:section];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+  if (![self.delegate respondsToSelector:_cmd]) return collectionViewLayout.minimumLineSpacing;
+
+  return [self.delegate collectionView:collectionView layout:collectionViewLayout minimumLineSpacingForSectionAtIndex:section];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+  if (![self.delegate respondsToSelector:_cmd]) return collectionViewLayout.footerReferenceSize;
+
+  return [self.delegate collectionView:collectionView layout:collectionViewLayout referenceSizeForFooterInSection:section];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+  if (![self.delegate respondsToSelector:_cmd]) return collectionViewLayout.headerReferenceSize;
+
+  return [self.delegate collectionView:collectionView layout:collectionViewLayout referenceSizeForHeaderInSection:section];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewFlowLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (![self.delegate respondsToSelector:_cmd]) return collectionViewLayout.itemSize;
+
+  return [self.delegate collectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:indexPath];
+}
+
+
 @end
