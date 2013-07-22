@@ -34,7 +34,7 @@
 
     NSMutableArray *row1 = [[NSMutableArray alloc] initWithCapacity:100];
 
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 100; i++) {
       [row1 addObject:@(i)];
     }
 

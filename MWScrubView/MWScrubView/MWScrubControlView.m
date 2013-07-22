@@ -92,8 +92,9 @@
       UILabel *label = attribute.label;
 
       if (nil == label) {
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f,
-          self.bounds.size.height * attribute.relativeYCoordinate,
+        label = [[UILabel alloc] initWithFrame:CGRectMake(
+          0.0f,
+          self.bounds.origin.y + self.bounds.size.height * attribute.relativeYCoordinate,
           self.bounds.size.width,
           [attribute.attributedString size].height
         )];
@@ -105,8 +106,9 @@
         attribute.label = label;
         [self addSubview:label];
       } else {
-        label.frame = CGRectMake(0.0f,
-          self.bounds.size.height * attribute.relativeYCoordinate,
+        label.frame = CGRectMake(
+          0.0f,
+          self.bounds.origin.y + self.bounds.size.height * attribute.relativeYCoordinate,
           self.bounds.size.width,
           [attribute.attributedString size].height
         );
@@ -114,11 +116,27 @@
   }];
 
   CGRect relativePositionOfIndicatorView = [self.delegate relativePositionOfIndicatorForScrubControlView:self];
+
+  CGFloat yPosition = MAX(
+    self.bounds.origin.y + 2.0f,
+    self.bounds.origin.y + relativePositionOfIndicatorView.origin.y * self.bounds.size.height
+  );
+  
+  CGFloat height = relativePositionOfIndicatorView.size.height * self.bounds.size.height;
+
+  if (relativePositionOfIndicatorView.origin.y < 0) {
+    height -= fabsf(relativePositionOfIndicatorView.origin.y * self.bounds.size.height);
+  }
+  
+  if (relativePositionOfIndicatorView.origin.y + relativePositionOfIndicatorView.size.height >= 0.999999f) {
+    height -= (relativePositionOfIndicatorView.origin.y + relativePositionOfIndicatorView.size.height - 1.0f) * self.bounds.size.height + 2.0f;
+  }
+
   self.positionIndicatorView.frame = CGRectMake(
     relativePositionOfIndicatorView.origin.x * self.bounds.size.width + 2.0f,
-    relativePositionOfIndicatorView.origin.y * self.bounds.size.height,
+    yPosition,
     relativePositionOfIndicatorView.size.width * self.bounds.size.width - 4.0f,
-    relativePositionOfIndicatorView.size.height * self.bounds.size.height
+    height
   );
 }
 
