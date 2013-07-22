@@ -7,6 +7,7 @@
 //
 
 #import "MWScrubControlView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface MWScrubControlLabelAttribute : NSObject
 @property (strong, nonatomic) NSAttributedString *attributedString;
@@ -34,6 +35,9 @@
 
     self.positionIndicatorView = [[UIView alloc] initWithFrame:CGRectZero];
     self.positionIndicatorView.backgroundColor = [UIColor lightGrayColor];
+    self.positionIndicatorView.layer.cornerRadius = 8.0f;
+    self.positionIndicatorView.layer.masksToBounds = NO;
+
     [self addSubview:self.positionIndicatorView];
   }
   return self;
@@ -111,9 +115,9 @@
 
   CGRect relativePositionOfIndicatorView = [self.delegate relativePositionOfIndicatorForScrubControlView:self];
   self.positionIndicatorView.frame = CGRectMake(
-    relativePositionOfIndicatorView.origin.x * self.bounds.size.width,
+    relativePositionOfIndicatorView.origin.x * self.bounds.size.width + 2.0f,
     relativePositionOfIndicatorView.origin.y * self.bounds.size.height,
-    relativePositionOfIndicatorView.size.width * self.bounds.size.width,
+    relativePositionOfIndicatorView.size.width * self.bounds.size.width - 4.0f,
     relativePositionOfIndicatorView.size.height * self.bounds.size.height
   );
 }

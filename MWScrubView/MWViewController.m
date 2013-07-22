@@ -34,7 +34,7 @@
 
     NSMutableArray *row1 = [[NSMutableArray alloc] initWithCapacity:100];
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 10000; i++) {
       [row1 addObject:@(i)];
     }
 
@@ -74,10 +74,10 @@
 }
 
 - (MWScrubViewAttribute*)scrubView:(MWScrubView *)scrubView attributeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSAttributedString *positionMarker = indexPath.item % 5 == 0 ? [[NSAttributedString alloc] initWithString:[self.sections[indexPath.section][indexPath.item] stringValue]] : nil;
+  NSAttributedString *positionMarker = indexPath.item % 500 == 0 ? [[NSAttributedString alloc] initWithString:[self.sections[indexPath.section][indexPath.item] stringValue]] : nil;
   NSAttributedString *indicator = [[NSAttributedString alloc] initWithString:[self.sections[indexPath.section][indexPath.item] stringValue]];
   NSUInteger weight = indexPath.item % 5 == 0 ? 20 : 1;
-  return [MWScrubViewAttribute attributeWithPositionMarker:positionMarker indicator:indicator weight:weight];
+  return [MWScrubViewAttribute attributeWithPositionMarker:positionMarker indicator:indicator weight:1];
 }
 
 @end

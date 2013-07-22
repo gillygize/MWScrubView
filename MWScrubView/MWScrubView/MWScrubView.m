@@ -53,7 +53,7 @@
 
   if (!self.collectionView) {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.sectionInset = UIEdgeInsetsMake(0.0f, 44.0f, 0.0f, 0.0f );
+    layout.sectionInset = UIEdgeInsetsMake(0.0f, 55.0f, 0.0f, 0.0f );
     layout.itemSize = CGSizeMake(self.bounds.size.width-(layout.sectionInset.left + 1), 44.0f);
     layout.minimumInteritemSpacing = 0.0f;
     layout.minimumLineSpacing = 0.0f;
@@ -70,7 +70,7 @@
   self.collectionView.delegate = self;
 
   self.scrubControlView = [[MWScrubControlView alloc] initWithFrame:CGRectMake(
-    0.0f,
+    5.0f,
     5.0f,
     44.0f,
     self.bounds.size.height - 10.0f
@@ -79,8 +79,11 @@
   self.scrubControlView.layer.shadowRadius = 4.0f;
   self.scrubControlView.layer.shadowOpacity = 1.0f;
   self.scrubControlView.layer.masksToBounds = NO;
-  self.scrubControlView.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
-  self.autoresizesSubviews = YES;
+  self.scrubControlView.backgroundColor = [UIColor
+    colorWithRed:230.0f/255.0f
+    green:230.0f/255.0f
+    blue:230.0f/255.0f
+    alpha:1.0f];
   [self addSubview:self.scrubControlView];
 
   self.indicatorLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -150,7 +153,7 @@
   [self.collectionView.collectionViewLayout invalidateLayout];
 
   self.scrubControlView.frame = CGRectMake(
-    0.0f,
+    5.0f,
     5.0f,
     44.0f,
     self.bounds.size.height - 10.0f
@@ -244,7 +247,7 @@
     MWScrubViewAttribute *attribute = self.attributeSections[indexPath.section][indexPath.item];
     self.indicatorLabel.attributedText = attribute.indicatorAttributedText;
     self.indicatorLabel.frame = CGRectMake(
-      50.0f,
+      55.0f,
       yCoordinate * self.scrubControlView.bounds.size.height - 10.0f,
       100.0f,
       20.0f
