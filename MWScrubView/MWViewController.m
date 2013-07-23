@@ -74,7 +74,7 @@
 }
 
 - (MWScrubViewAttribute*)scrubView:(MWScrubView *)scrubView attributeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSAttributedString *positionMarker = indexPath.item % 500 == 0 ? [[NSAttributedString alloc] initWithString:[self.sections[indexPath.section][indexPath.item] stringValue]] : nil;
+  NSAttributedString *positionMarker = indexPath.item % 5 == 0 ? [[NSAttributedString alloc] initWithString:[self.sections[indexPath.section][indexPath.item] stringValue]] : nil;
   NSAttributedString *indicator = [[NSAttributedString alloc] initWithString:[self.sections[indexPath.section][indexPath.item] stringValue]];
   NSUInteger weight = indexPath.item % 5 == 0 ? 20 : 1;
   return [MWScrubViewAttribute attributeWithPositionMarker:positionMarker indicator:indicator weight:1];

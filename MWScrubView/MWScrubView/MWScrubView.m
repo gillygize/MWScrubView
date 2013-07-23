@@ -10,6 +10,26 @@
 #import "MWScrubControlView.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface MWIndicatorLabel : UILabel
+@property (nonatomic) UIEdgeInsets edgeInsets;
+@end
+
+@implementation MWIndicatorLabel
+
+- (id)initWithFrame:(CGRect)frame{
+  self = [super initWithFrame:frame];
+  if (self) {
+    self.edgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+  }
+  return self;
+}
+
+- (void)drawTextInRect:(CGRect)rect {
+  return [super drawTextInRect:UIEdgeInsetsInsetRect(rect, self.edgeInsets)];
+}
+@end
+
+
 @implementation MWScrubViewAttribute
 + (instancetype)attributeWithPositionMarker:(NSAttributedString*)positionAttributedText
  indicator:(NSAttributedString*)indicatorAttributedText
@@ -25,7 +45,7 @@
 @interface MWScrubView () <MWScrubControlViewDelegate>
 
 @property (strong, nonatomic) MWScrubControlView *scrubControlView;
-@property (strong, nonatomic) UILabel *indicatorLabel;
+@property (strong, nonatomic) MWIndicatorLabel *indicatorLabel;
 @property (strong, nonatomic) NSMutableArray *attributeSections;
 @property (nonatomic) NSUInteger totalWeight;
 
@@ -86,12 +106,22 @@
     alpha:1.0f];
   [self addSubview:self.scrubControlView];
 
-  self.indicatorLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  self.indicatorLabel.backgroundColor = [UIColor whiteColor];
+  self.indicatorLabel = [[MWIndicatorLabel alloc] initWithFrame:CGRectZero];
+  self.indicatorLabel.backgroundColor = [UIColor
+    colorWithRed:230.0f/255.0f
+    green:230.0f/255.0f
+    blue:230.0f/255.0f
+    alpha:1.0f];
+  self.indicatorLabel.edgeInsets = UIEdgeInsetsMake(0.0f, 5.0f, 0.0f, 0.0f);
+  self.indicatorLabel.textColor = [UIColor darkGrayColor];
+  self.indicatorLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:13.0f];
   self.indicatorLabel.layer.shadowRadius = 4.0f;
   self.indicatorLabel.layer.shadowOpacity = 0.6f;
   self.indicatorLabel.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+  self.indicatorLabel.layer.shadowColor = [UIColor darkGrayColor].CGColor;
   self.indicatorLabel.layer.masksToBounds = NO;
+  self.indicatorLabel.layer.borderWidth = 1.0f;
+  self.indicatorLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
   self.indicatorLabel.hidden = YES;
 
   [self addSubview:self.indicatorLabel];

@@ -90,14 +90,16 @@
   [self.labelAttributes
     enumerateObjectsUsingBlock:^(MWScrubControlLabelAttribute *attribute, NSUInteger idx, BOOL *stop) {
       UILabel *label = attribute.label;
+      CGFloat height = [attribute.attributedString size].height;
+      CGRect labelFrame = CGRectMake(
+        0.0f,
+        self.bounds.origin.y + self.bounds.size.height * attribute.relativeYCoordinate - height * attribute.relativeYCoordinate,
+        self.bounds.size.width,
+        height
+      );
 
       if (nil == label) {
-        label = [[UILabel alloc] initWithFrame:CGRectMake(
-          0.0f,
-          self.bounds.origin.y + self.bounds.size.height * attribute.relativeYCoordinate,
-          self.bounds.size.width,
-          [attribute.attributedString size].height
-        )];
+        label = [[UILabel alloc] initWithFrame:labelFrame];
         label.attributedText = attribute.attributedString;
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor darkGrayColor];
@@ -106,12 +108,7 @@
         attribute.label = label;
         [self addSubview:label];
       } else {
-        label.frame = CGRectMake(
-          0.0f,
-          self.bounds.origin.y + self.bounds.size.height * attribute.relativeYCoordinate,
-          self.bounds.size.width,
-          [attribute.attributedString size].height
-        );
+        label.frame = labelFrame;
       }
   }];
 
